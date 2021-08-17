@@ -34,7 +34,10 @@ export const AuthProvider = (props) => {
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      setCurrentUser(null);
+    };
   }, []);
 
   const value = {
