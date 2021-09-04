@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { auth, fireDB, app } from "../auth/firebase";
+import { auth, fireDB } from "../auth/firebase";
 
 export const AuthContext = createContext();
 
@@ -58,12 +58,28 @@ export const AuthProvider = (props) => {
       .set({
         users: [],
       });
-
-    // adding messages array
-    //console.log(groupDoc);
   }
 
-  async function getUsers() {}
+  async function getUsers(groupName) {
+    await fireDB
+      .collection("groups")
+      .doc(groupName)
+      .collection("group_data")
+      .doc("users")
+      .get()
+      .then((doc) => {
+        const arr = Object.values(doc.data().users);
+
+        console.log(arr);
+        setUsers(arr);
+      });
+
+    // console.log(userDoc.data(), "printing user document");
+    // let userList = userDoc.data();
+    // console.log(userDoc.users[0], "printing user data");
+    // setUsers(userDoc.data());
+    
+  }
 
   async function getGroupID(group) {
     let id = null;
@@ -103,7 +119,7 @@ export const AuthProvider = (props) => {
       // });
       .then((snapshot) => snapshot.forEach((doc) => console.log(doc.data())));
 
-    console.table(groupDataCol);
+    //console.table(groupDataCol);
   }
 
   // messaging
@@ -124,10 +140,12 @@ export const AuthProvider = (props) => {
     login,
     signup,
     signout,
+    users,
     addUser2Group,
     addGroup,
     getGroups,
     getGroupID,
+    getUsers,
     groups,
   };
 
