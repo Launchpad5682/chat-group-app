@@ -12,6 +12,7 @@ export const AuthProvider = (props) => {
 
   // user and group data for chats
   const [groups, setGroups] = useState([]);
+  const [group, setGroup] = useState(null);
   const [users, setUsers] = useState([]);
 
   //signup function
@@ -42,16 +43,24 @@ export const AuthProvider = (props) => {
     setGroups(tempGroups);
   }
 
-
   async function addGroup(groupName) {
-    await fireDB.collection("groups").add({
+    // creating document with custom ID
+    await fireDB.collection("groups").doc(groupName).set({
       group: groupName,
     });
 
-    //TOD
-    // await fireDB.collection("groups").doc().set({
-    //   id: "moon",
-    // });
+    // adding users array list to the group data collection
+    await fireDB
+      .collection("groups")
+      .doc(groupName)
+      .collection("group_data")
+      .doc("users")
+      .set({
+        users: [],
+      });
+
+    // adding messages array
+    //console.log(groupDoc);
   }
 
   async function getUsers() {}
@@ -80,11 +89,24 @@ export const AuthProvider = (props) => {
       .collection("groups")
       .doc(await getGroupID(group))
       .collection("group_data")
+      //.doc("users")
+      // .where("users", "==", true)
       .get()
+      // .then((snapshot) => {
+      //   if (snapshot.empty) {
+      //     console.log("No match found");
+      //   } else {
+      //     snapshot.forEach((doc) => {
+      //       console.log(doc);
+      //     });
+      //   }
+      // });
       .then((snapshot) => snapshot.forEach((doc) => console.log(doc.data())));
 
-    console.log(groupDataCol);
+    console.table(groupDataCol);
   }
+
+  // messaging
 
   // useEffect hook to check the currently signed in user
   // https://firebase.google.com/docs/auth/web/manage-users
