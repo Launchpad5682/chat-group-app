@@ -43,7 +43,9 @@ export const AuthProvider = (props) => {
   }
 
   async function addGroup(groupName) {
-    
+    await fireDB.collection("groups").add({
+      group: groupName,
+    });
   }
 
   async function getUsers() {}
@@ -120,6 +122,7 @@ export const AuthProvider = (props) => {
     signup,
     signout,
     addUser2Group,
+    addGroup,
     getGroups,
     groups,
   };
