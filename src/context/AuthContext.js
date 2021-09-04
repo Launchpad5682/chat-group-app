@@ -42,67 +42,48 @@ export const AuthProvider = (props) => {
     setGroups(tempGroups);
   }
 
+
   async function addGroup(groupName) {
     await fireDB.collection("groups").add({
       group: groupName,
     });
+
+    //TOD
+    // await fireDB.collection("groups").doc().set({
+    //   id: "moon",
+    // });
   }
 
   async function getUsers() {}
 
-  async function addUser2Group(user) {
+  async function getGroupID(group) {
+    let id = null;
+    try {
+      await fireDB
+        .collection("groups")
+        .where("group", "==", group)
+        .get()
+        .then((snapshot) => {
+          snapshot.forEach((doc) => {
+            id = doc.id;
+          });
+        });
+      return id;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async function addUser2Group(group, user) {
     const { uid, photoURL } = currentUser;
-    // fireDB
-    //   .collection("groups")
-    //   .doc("welcome")
-    //   .collection("group_data")
-    //   .doc("users")
-    //   .then((data) => console.log(data));
-    // // console.log(uid, photoURL);
-    // // return { uid, photoURL };
-    // await fireDB
-    //   .collectionGroup("groups")
-    //   .where("group", "==", "welcome")
-    //   .collection("group_data")
-    //   .get()
-    //   // .doc("welcome")
-    //   // .collection("group_data")
-    //   // .get()
-    //   .then((snapshot) => snapshot.forEach((doc) => console.log(doc.data())));
-
-    // await fireDB
-    //   .collection("groups")
-    //   .get()
-    //   .then((snapshot) =>
-    //     snapshot.forEach((data) => console.log(data.data()))
-    //   );
-
-    await fireDB
-      .collection("groups/welcome/group_data")
+    let groupDataCol = await fireDB
+      .collection("groups")
+      .doc(await getGroupID(group))
+      .collection("group_data")
       .get()
       .then((snapshot) => snapshot.forEach((doc) => console.log(doc.data())));
 
-    // const arrayUnion = fireDB.FieldValue;
-    // console.dir(arrayUnion);
-
-    const doc = await fireDB.doc("groups/welcome/group_data/users");
-
-    doc.update({
-      items: fireDB.FieldValue.arrayUnion("Atharva"),
-    });
-
-    // await doc.update({
-    //   items: arrayUnion(user),
-    // });
-
-    // await fireDB
-    //   .collection("groups")
-    //   // .where("group", "==", "welcome")
-    //   .doc("welcome")
-    //   .collection("group_data")
-    //   .doc("users")
-    //   .get()
-    //   .then((snapshot) => console.table(snapshot));
+    console.log(groupDataCol);
   }
 
   // useEffect hook to check the currently signed in user
@@ -124,6 +105,7 @@ export const AuthProvider = (props) => {
     addUser2Group,
     addGroup,
     getGroups,
+    getGroupID,
     groups,
   };
 
