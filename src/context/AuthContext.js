@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { auth, fireDB } from "../auth/firebase";
+import { auth, fireDB, firebase } from "../auth/firebase";
 
 export const AuthContext = createContext();
 
@@ -69,16 +69,22 @@ export const AuthProvider = (props) => {
       .get()
       .then((doc) => {
         const arr = Object.values(doc.data().users);
+        let arrUsers = [];
+        arr.forEach((ele) => {
+          if (typeof ele === "object") {
+            arrUsers.push(ele.name);
+          } else {
+            arrUsers.push(ele);
+          }
+        });
 
-        console.log(arr);
-        setUsers(arr);
+        setUsers(arrUsers);
       });
 
     // console.log(userDoc.data(), "printing user document");
     // let userList = userDoc.data();
     // console.log(userDoc.users[0], "printing user data");
     // setUsers(userDoc.data());
-    
   }
 
   async function getGroupID(group) {
@@ -101,25 +107,19 @@ export const AuthProvider = (props) => {
 
   async function addUser2Group(group, user) {
     const { uid, photoURL } = currentUser;
-    let groupDataCol = await fireDB
+    let groupUsersRef = await fireDB
       .collection("groups")
-      .doc(await getGroupID(group))
+      // .doc(await getGroupID(group))
+      .doc(group)
       .collection("group_data")
-      //.doc("users")
-      // .where("users", "==", true)
-      .get()
-      // .then((snapshot) => {
-      //   if (snapshot.empty) {
-      //     console.log("No match found");
-      //   } else {
-      //     snapshot.forEach((doc) => {
-      //       console.log(doc);
-      //     });
-      //   }
-      // });
-      .then((snapshot) => snapshot.forEach((doc) => console.log(doc.data())));
+      .doc("users");
 
-    //console.table(groupDataCol);
+    groupUsersRef.update({
+      users: firebase.firestore.FieldValue.arrayUnion({
+        name: user,
+        uid: currentUser.uid,
+      }),
+    });
   }
 
   // messaging
@@ -155,3 +155,10 @@ export const AuthProvider = (props) => {
     </AuthContext.Provider>
   );
 };
+
+/*
+// Update the timestamp field with the value from the server
+db.collection('objects').doc('some-id').update({
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+});
+ */
