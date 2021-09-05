@@ -58,6 +58,9 @@ export const AuthProvider = (props) => {
       .set({
         users: [],
       });
+
+    // adding messages sub collection
+    // await fireDB.collection("groups").doc(groupName).collection("messages");
   }
 
   async function getUsers(groupName) {
@@ -107,6 +110,7 @@ export const AuthProvider = (props) => {
 
   async function addUser2Group(group, user) {
     const { uid, photoURL } = currentUser;
+
     let groupUsersRef = await fireDB
       .collection("groups")
       // .doc(await getGroupID(group))
@@ -116,13 +120,21 @@ export const AuthProvider = (props) => {
 
     groupUsersRef.update({
       users: firebase.firestore.FieldValue.arrayUnion({
-        name: user,
+        name: currentUser.email,
         uid: currentUser.uid,
       }),
     });
   }
 
   // messaging
+  async function sendMessage(groupName, msg) {
+    await fireDB.collection("groups").doc(groupName).collection("messages").add({
+      uid: currentUser.uid,
+      name: currentUser.email,
+      body: msg,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  }
 
   // useEffect hook to check the currently signed in user
   // https://firebase.google.com/docs/auth/web/manage-users
@@ -144,9 +156,11 @@ export const AuthProvider = (props) => {
     addUser2Group,
     addGroup,
     getGroups,
+    setGroup,
     getGroupID,
     getUsers,
     groups,
+    sendMessage,
   };
 
   return (
