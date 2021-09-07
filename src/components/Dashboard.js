@@ -18,10 +18,20 @@ function Dashboard() {
 
   const { messages } = useFireStore(group);
   const message = useRef(null);
+  const messageEndRef = useRef(null);
 
   useEffect(() => {
     getUsers(group);
   });
+
+  // scroll to bottom https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
+  const scrollToBottom = () => {
+    messageEndRef.current.scrollIntoView({ behaviour: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   function submitHandler(e) {
     e.preventDefault();
@@ -40,7 +50,7 @@ function Dashboard() {
       <div className="bg-gray-900 w-full">
         <div>
           <h1 className="text-xl">{group.toUpperCase()}</h1>
-          <div>
+          <div className="scroll-div flex-col-reverse">
             {messages
               ? messages.map((message) => (
                   <div>
@@ -49,9 +59,10 @@ function Dashboard() {
                   </div>
                 ))
               : null}
+            <div ref={messageEndRef} />
           </div>
         </div>
-        <form className="absolute bottom-3" onSubmit={submitHandler}>
+        <form className="" onSubmit={submitHandler}>
           <input
             id="message"
             type="text"
