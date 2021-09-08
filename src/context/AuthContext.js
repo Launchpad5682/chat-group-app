@@ -12,7 +12,7 @@ export const AuthProvider = (props) => {
 
   // user and group data for chats
   const [groups, setGroups] = useState([]);
-  const [group, setGroup] = useState(null);
+  const [group, setGroup] = useState("welcome");
   const [users, setUsers] = useState([]);
 
   //signup function
@@ -108,7 +108,7 @@ export const AuthProvider = (props) => {
     }
   }
 
-  async function addUser2Group(group, user) {
+  async function addUser2Group(group) {
     const { uid, photoURL } = currentUser;
 
     let groupUsersRef = await fireDB
@@ -120,20 +120,24 @@ export const AuthProvider = (props) => {
 
     groupUsersRef.update({
       users: firebase.firestore.FieldValue.arrayUnion({
-        name: currentUser.email,
         uid: currentUser.uid,
+        name: currentUser.email.split("@")[0],
       }),
     });
   }
 
   // messaging
   async function sendMessage(groupName, msg) {
-    await fireDB.collection("groups").doc(groupName).collection("messages").add({
-      uid: currentUser.uid,
-      name: currentUser.email,
-      body: msg,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    await fireDB
+      .collection("groups")
+      .doc(groupName)
+      .collection("messages")
+      .add({
+        uid: currentUser.uid,
+        name: currentUser.email,
+        body: msg,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
   }
 
   // useEffect hook to check the currently signed in user
@@ -142,10 +146,12 @@ export const AuthProvider = (props) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
+      // temporary 
+      if (currentUser) addUser2Group(group);
     });
 
     return () => unsubscribe();
-  }, []);
+  });
 
   const value = {
     currentUser,
@@ -159,6 +165,7 @@ export const AuthProvider = (props) => {
     setGroup,
     getGroupID,
     getUsers,
+    group,
     groups,
     sendMessage,
   };
