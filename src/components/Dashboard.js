@@ -1,6 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useFireStore } from "../hooks/useFirestore";
+import axios from "axios";
+import Svg from "react-inlinesvg";
 
 function Dashboard() {
   const {
@@ -37,6 +39,17 @@ function Dashboard() {
     e.preventDefault();
     sendMessage(group, message.current.value);
     message.current.value = null;
+    // getAvatar();
+    // console.log(avatar);
+    // console.log(users.find((user) => user.name === "hello"));
+    // console.log(users);
+  }
+
+  function getAvatar() {
+    axios
+      .get("https://avatars.dicebear.com/api/miniavs/:saurabh.svg")
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
   }
 
   return (
@@ -45,7 +58,16 @@ function Dashboard() {
         <h2 className="">{group.toUpperCase()}</h2>
         <div>Group description help desk fall apart to the end</div>
         <h2>MEMEBERS</h2>
-        <div>{users ? users.map((user) => <div>{user}</div>) : null}</div>
+        <div>
+          {users
+            ? users.map((user) => (
+                <div className="flex-col">
+                  <Svg src={user.svg} alt="avatar" className="inline" />
+                  {user.name}
+                </div>
+              ))
+            : null}
+        </div>
       </div>
       <div className="bg-gray-900 w-full">
         <div>
@@ -54,6 +76,10 @@ function Dashboard() {
             {messages
               ? messages.map((message) => (
                   <div>
+                    {/* {avatar ? <div>avatar</div> : null} */}
+                    {/* {users.find((user) => user.name === message.name).svg
+                      ? users.find((user) => user.name === message.name)["svg"]
+                      : null} */}
                     <div>{message.name}</div>
                     <div>{message.body}</div>
                   </div>
