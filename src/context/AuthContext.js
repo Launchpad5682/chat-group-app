@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { auth, fireDB, firebase } from "../auth/firebase";
+import { createAvatar } from "@dicebear/avatars";
+import * as style from "@dicebear/open-peeps";
 
 export const AuthContext = createContext();
 
@@ -63,6 +65,15 @@ export const AuthProvider = (props) => {
     // await fireDB.collection("groups").doc(groupName).collection("messages");
   }
 
+  function getAvatar(userName) {
+    const avatar = createAvatar(style, {
+      seed: userName,
+      dataUri: true,
+      size: 48,
+    });
+    return avatar;
+  }
+
   async function getUsers(groupName) {
     await fireDB
       .collection("groups")
@@ -75,7 +86,10 @@ export const AuthProvider = (props) => {
         let arrUsers = [];
         arr.forEach((ele) => {
           if (typeof ele === "object") {
-            arrUsers.push(ele.name);
+            arrUsers.push({
+              name: ele.name,
+              svg: ele.svg,
+            });
           } else {
             arrUsers.push(ele);
           }
@@ -122,6 +136,7 @@ export const AuthProvider = (props) => {
       users: firebase.firestore.FieldValue.arrayUnion({
         uid: currentUser.uid,
         name: currentUser.email.split("@")[0],
+        svg: getAvatar(currentUser.email.split("@")[0]),
       }),
     });
   }
@@ -146,7 +161,7 @@ export const AuthProvider = (props) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
-      // temporary 
+      // temporary
       if (currentUser) addUser2Group(group);
     });
 
