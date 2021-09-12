@@ -45,16 +45,9 @@ function Dashboard() {
     // console.log(users);
   }
 
-  function getAvatar() {
-    axios
-      .get("https://avatars.dicebear.com/api/miniavs/:saurabh.svg")
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
-  }
-
   return (
     <div className="flex text-white bg-black h-screen">
-      <div className="w-80">
+      <div className="w-80 p-3">
         <h2 className="">{group.toUpperCase()}</h2>
         <div>Group description help desk fall apart to the end</div>
         <h2>MEMEBERS</h2>
@@ -69,17 +62,25 @@ function Dashboard() {
             : null}
         </div>
       </div>
-      <div className="bg-gray-900 w-full">
+      <div className="bg-gray-900 w-full p-3">
         <div>
           <h1 className="text-xl">{group.toUpperCase()}</h1>
           <div className="scroll-div flex-col-reverse">
             {messages
               ? messages.map((message) => (
-                  <div>
+                  <div className="my-2 border-2 border-gray-600 bg-gray-800">
                     {/* {avatar ? <div>avatar</div> : null} */}
-                    {/* {users.find((user) => user.name === message.name).svg
-                      ? users.find((user) => user.name === message.name)["svg"]
-                      : null} */}
+                    {/* {users.find((user) => user.name === message.name).svg ? (
+                      <Svg
+                        src={
+                          users.find((user) => user.name === message.name)[
+                            "svg"
+                          ]
+                        }
+                        alt="avatar"
+                        className="inline"
+                      />
+                    ) : null} */}
                     <div>{message.name}</div>
                     <div>{message.body}</div>
                   </div>
