@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useFireStore } from "../hooks/useFirestore";
 import axios from "axios";
 import Svg from "react-inlinesvg";
+import { HiArrowLeft } from "react-icons/hi";
 
 function Dashboard() {
   const {
@@ -48,7 +49,10 @@ function Dashboard() {
   return (
     <div className="flex text-white bg-black h-screen">
       <div className="w-80 p-3">
-        <h2 className="">{group.toUpperCase()}</h2>
+        <h2 className="">
+          <HiArrowLeft className="inline mr-4" />
+          {group.toUpperCase()}
+        </h2>
         <div>Group description help desk fall apart to the end</div>
         <h2>MEMEBERS</h2>
         <div>
@@ -68,21 +72,22 @@ function Dashboard() {
           <div className="scroll-div flex-col-reverse">
             {messages
               ? messages.map((message) => (
-                  <div className="my-2 border-2 border-gray-600 bg-gray-800">
+                  <div className="my-2 border-2 border-gray-600 bg-gray-800 flex">
                     {/* {avatar ? <div>avatar</div> : null} */}
-                    {/* {users.find((user) => user.name === message.name).svg ? (
+                    {users.find((user) => user.name === message.name) !==
+                    undefined ? (
                       <Svg
                         src={
-                          users.find((user) => user.name === message.name)[
-                            "svg"
-                          ]
+                          users.find((user) => user.name === message.name).svg
                         }
                         alt="avatar"
                         className="inline"
                       />
-                    ) : null} */}
-                    <div>{message.name}</div>
-                    <div>{message.body}</div>
+                    ) : null}
+                    <div>
+                      <div>{message.name}</div>
+                      <div>{message.body}</div>
+                    </div>
                   </div>
                 ))
               : null}
