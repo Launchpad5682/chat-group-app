@@ -162,7 +162,7 @@ export const AuthProvider = (props) => {
       setCurrentUser(user);
       setLoading(false);
       // temporary
-      if (currentUser) addUser2Group(group);
+      // if (currentUser) addUser2Group(group);
     });
 
     return () => unsubscribe();
