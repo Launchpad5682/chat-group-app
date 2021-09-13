@@ -45,10 +45,11 @@ export const AuthProvider = (props) => {
     setGroups(tempGroups);
   }
 
-  async function addGroup(groupName) {
+  async function addGroup(groupName, groupDesc) {
     // creating document with custom ID
     await fireDB.collection("groups").doc(groupName).set({
       group: groupName,
+      description: groupDesc,
     });
 
     // adding users array list to the group data collection
