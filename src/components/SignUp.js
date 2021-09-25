@@ -21,7 +21,7 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signup(email.current.value, password.current.value);
-      history.push("/dashboard");
+      history.push("/groups");
     } catch {
       setError("Failed to create an account");
     }
