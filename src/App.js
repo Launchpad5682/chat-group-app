@@ -24,31 +24,31 @@ function App() {
   }, []);
 
   return (
-      <ModalOverlayProvider>
-        <Router>
-          <Switch>
-            {groups
-              ? groups.map((group) => (
-                  <PrivateRoute path={"/groups/" + group}>
-                    <Messages />
-                  </PrivateRoute>
-                ))
-              : null}
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={SignIn} />
-            <Route path="/signout" component={SignOut} />
-            <PrivateRoute path="/groups">
-              <Main />
-            </PrivateRoute>
-            <PrivateRoute path="/groups/:id">
-              <Messages />
-            </PrivateRoute>
-            <Route exact path="/">
-              <Redirect to="/login" />
-            </Route>
-          </Switch>
-        </Router>
-      </ModalOverlayProvider>
+    <ModalOverlayProvider>
+      <Router>
+        <Switch>
+          {groups
+            ? groups.map((group) => (
+                <PrivateRoute path={"/" + group}>
+                  <Messages />
+                </PrivateRoute>
+              ))
+            : null}
+          <Route path="/signup" component={SignUp} />
+          <Route path="/login" component={SignIn} />
+          <Route path="/signout" component={SignOut} />
+          <PrivateRoute path="/groups">
+            <Main />
+          </PrivateRoute>
+          <PrivateRoute path="/:id">
+            <Messages />
+          </PrivateRoute>
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
+        </Switch>
+      </Router>
+    </ModalOverlayProvider>
   );
 }
 
