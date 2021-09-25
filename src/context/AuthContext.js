@@ -14,7 +14,7 @@ export const AuthProvider = (props) => {
 
   // user and group data for chats
   const [groups, setGroups] = useState([]);
-  const [group, setGroup] = useState("welcome");
+  const [group, setGroup] = useState(null);
   const [users, setUsers] = useState([]);
 
   //signup function
@@ -192,10 +192,3 @@ export const AuthProvider = (props) => {
     </AuthContext.Provider>
   );
 };
-
-/*
-// Update the timestamp field with the value from the server
-db.collection('objects').doc('some-id').update({
-    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-});
- */

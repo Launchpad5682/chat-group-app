@@ -4,10 +4,12 @@ import { HiPlus } from "react-icons/hi";
 import { useAuth } from "../context/AuthContext";
 import AddGroupDialog from "./AddGroupDialog";
 import { useModalOverlayContext } from "../context/ModalOverlayContext";
+import { useHistory } from "react-router-dom";
 
 function Main() {
-  const { groups, getGroups } = useAuth();
+  const { groups, getGroups, setGroup } = useAuth();
   const { modalOverlay, setModalOverlay } = useModalOverlayContext();
+  const history = useHistory();
 
   useEffect(() => {
     getGroups();
@@ -17,8 +19,14 @@ function Main() {
     console.log("add group clicked");
   }
 
+  const selectGroup = (event, group) => {
+    const link = "/" + group + "/";
+    setGroup(group);
+    history.push(link);
+  };
+
   return (
-    <div>
+    <>
       <div className="flex text-white bg-black h-screen">
         <div className="w-80 p-3">
           <div className="flex justify-between align-middle">
@@ -32,13 +40,17 @@ function Main() {
             <input
               type="text"
               placeholder="Search"
-              className="w-full bg-gray-800 h-10"
+              className="w-full bg-gray-800 h-10 outline-none px-3 rounded-md mt-2"
             ></input>
           </form>
           <div className="mt-5">
             {groups
               ? groups.map((group) => (
-                  <div key={group} className="flex rounded-md">
+                  <div
+                    key={group}
+                    className="flex rounded-md mt-3 hover:bg-green-600"
+                    onClick={(event) => selectGroup(event, group)}
+                  >
                     <div className="text-lg bg-gray-600 mr-2 rounded-md w-10 h-10 flex items-center justify-center">
                       <text>{group[0].toUpperCase()}</text>
                     </div>
@@ -56,7 +68,7 @@ function Main() {
         </div>
       </div>
       {modalOverlay && <AddGroupDialog />}
-    </div>
+    </>
   );
 }
 
