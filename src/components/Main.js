@@ -4,10 +4,12 @@ import { HiPlus } from "react-icons/hi";
 import { useAuth } from "../context/AuthContext";
 import AddGroupDialog from "./AddGroupDialog";
 import { useModalOverlayContext } from "../context/ModalOverlayContext";
+import { useHistory } from "react-router-dom";
 
 function Main() {
   const { groups, getGroups } = useAuth();
   const { modalOverlay, setModalOverlay } = useModalOverlayContext();
+  const history = useHistory();
 
   useEffect(() => {
     getGroups();
@@ -16,6 +18,11 @@ function Main() {
   function addGroupHandler() {
     console.log("add group clicked");
   }
+
+  const selectGroup = (event, group) => {
+    const link = "/" + group + "/";
+    history.push(link);
+  };
 
   return (
     <>
@@ -41,6 +48,7 @@ function Main() {
                   <div
                     key={group}
                     className="flex rounded-md mt-3 hover:bg-green-600"
+                    onClick={(event) => selectGroup(event, group)}
                   >
                     <div className="text-lg bg-gray-600 mr-2 rounded-md w-10 h-10 flex items-center justify-center">
                       <text>{group[0].toUpperCase()}</text>
