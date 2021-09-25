@@ -4,16 +4,11 @@ import { useFireStore } from "../hooks/useFirestore";
 import axios from "axios";
 import Svg from "react-inlinesvg";
 import { HiArrowLeft } from "react-icons/hi";
+import { useHistory } from "react-router-dom";
 
 function Messages() {
   const {
-    currentUser,
-    addUser2Group,
-    getGroupID,
-    addGroup,
-    getGroups,
     getUsers,
-    groups,
     users,
     sendMessage,
     group,
@@ -22,6 +17,7 @@ function Messages() {
   const { messages } = useFireStore(group);
   const message = useRef(null);
   const messageEndRef = useRef(null);
+  const history = useHistory();
 
   useEffect(() => {
     getUsers(group);
@@ -46,11 +42,15 @@ function Messages() {
     // console.log(users);
   }
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
     <div className="flex text-white bg-black h-screen">
       <div className="w-80 p-3">
         <h2 className="">
-          <HiArrowLeft className="inline mr-4" />
+          <HiArrowLeft className="inline mr-4" onClick={goBack} />
           {group.toUpperCase()}
         </h2>
         <div>Group description help desk fall apart to the end</div>
