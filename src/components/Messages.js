@@ -5,7 +5,7 @@ import axios from "axios";
 import Svg from "react-inlinesvg";
 import { HiArrowLeft } from "react-icons/hi";
 
-function Dashboard() {
+function Messages() {
   const {
     currentUser,
     addUser2Group,
@@ -112,4 +112,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Messages;
