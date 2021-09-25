@@ -7,7 +7,7 @@ import { useModalOverlayContext } from "../context/ModalOverlayContext";
 import { useHistory } from "react-router-dom";
 
 function Main() {
-  const { groups, getGroups } = useAuth();
+  const { groups, getGroups, setGroup } = useAuth();
   const { modalOverlay, setModalOverlay } = useModalOverlayContext();
   const history = useHistory();
 
@@ -21,6 +21,7 @@ function Main() {
 
   const selectGroup = (event, group) => {
     const link = "/" + group + "/";
+    setGroup(group);
     history.push(link);
   };
 
