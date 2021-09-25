@@ -1,18 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useFireStore } from "../hooks/useFirestore";
-import axios from "axios";
 import Svg from "react-inlinesvg";
 import { HiArrowLeft } from "react-icons/hi";
+import { RiSendPlane2Fill } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 
 function Messages() {
-  const {
-    getUsers,
-    users,
-    sendMessage,
-    group,
-  } = useAuth();
+  const { getUsers, users, sendMessage, group } = useAuth();
 
   const { messages } = useFireStore(group);
   const message = useRef(null);
@@ -58,8 +53,10 @@ function Messages() {
         <div>
           {users
             ? users.map((user) => (
-                <div className="flex-col">
-                  <Svg src={user.svg} alt="avatar" className="inline" />
+                <div className="flex">
+                  <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
+                    <Svg src={user.svg} alt="avatar" className="inline" />
+                  </div>
                   {user.name}
                 </div>
               ))
@@ -72,20 +69,22 @@ function Messages() {
           <div className="scroll-div flex-col-reverse">
             {messages
               ? messages.map((message) => (
-                  <div className="my-2 border-2 border-gray-600 bg-gray-800 flex">
+                  <div className="my-2 border-2 border-gray-600 bg-gray-800 flex rounded-lg py-1">
                     {/* {avatar ? <div>avatar</div> : null} */}
-                    {users.find((user) => user.name === message.name) !==
-                    undefined ? (
-                      <Svg
-                        src={
-                          users.find((user) => user.name === message.name).svg
-                        }
-                        alt="avatar"
-                        className="inline"
-                      />
-                    ) : null}
+                    <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
+                      {users.find((user) => user.name === message.name) !==
+                      undefined ? (
+                        <Svg
+                          src={
+                            users.find((user) => user.name === message.name).svg
+                          }
+                          alt="avatar"
+                          className="inline"
+                        />
+                      ) : null}
+                    </div>
                     <div>
-                      <div>{message.name}</div>
+                      <div className="capitalize font-sans text-lg">{message.name}</div>
                       <div>{message.body}</div>
                     </div>
                   </div>
@@ -94,17 +93,20 @@ function Messages() {
             <div ref={messageEndRef} />
           </div>
         </div>
-        <form className="" onSubmit={submitHandler}>
+        <form className="flex" onSubmit={submitHandler}>
           <input
             id="message"
             type="text"
             ref={message}
             placeholder="Enter your message"
             required
-            className="bg-gray-600 focus:outline-none border-none focus:border-solid border-2 h-8 rounded-lg px-3 py-4 focus:border-green-500"
+            className="bg-gray-600 focus:outline-none border-none w-11/12 focus:border-solid border-2 h-8 rounded-lg px-3 py-4 focus:border-green-500 mr-2"
           ></input>
-          <button className="bg-green-700" type="submit">
-            Send
+          <button
+            className="bg-green-700 h-8 w-20 rounded-lg px-8"
+            type="submit"
+          >
+            <RiSendPlane2Fill />
           </button>
         </form>
       </div>
@@ -113,3 +115,4 @@ function Messages() {
 }
 
 export default Messages;
+/* RiSendPlane2Fill */
