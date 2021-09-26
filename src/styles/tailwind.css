@@ -6,7 +6,12 @@
   @variants responsive {
     .scroll-div {
       overflow-y: auto;
-      height: 900px;
+      -ms-overflow-style: none; /* Internet Explorer 10+ */
+      scrollbar-width: none; /* Firefox */
+    }
+
+    .scroll-div::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
     }
   }
 }
