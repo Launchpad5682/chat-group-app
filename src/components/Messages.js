@@ -63,49 +63,46 @@ function Messages() {
             : null}
         </div>
       </div>
-      <div className="bg-gray-900 w-full p-3">
-        <div>
-          <h1 className="text-xl">{group.toUpperCase()}</h1>
-          <div className="scroll-div flex-col-reverse">
-            {messages
-              ? messages.map((message) => (
-                  <div className="my-2 border-2 border-gray-600 bg-gray-800 flex rounded-lg py-1">
-                    {/* {avatar ? <div>avatar</div> : null} */}
-                    <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
-                      {users.find((user) => user.name === message.name) !==
-                      undefined ? (
-                        <Svg
-                          src={
-                            users.find((user) => user.name === message.name).svg
-                          }
-                          alt="avatar"
-                          className="inline"
-                        />
-                      ) : null}
-                    </div>
-                    <div>
-                      <div className="capitalize font-sans text-lg">{message.name}</div>
-                      <div>{message.body}</div>
-                    </div>
+      <div className="bg-gray-900 w-full p-3 flex-col h-screen">
+        <h1 className="text-xl mb-4">{group.toUpperCase()}</h1>
+        <div className="scroll-div flex-col-reverse h-5/6 mb-6">
+          {messages
+            ? messages.map((message) => (
+                <div className="my-2 border-2 border-gray-600 bg-gray-800 flex rounded-lg py-1">
+                  {/* {avatar ? <div>avatar</div> : null} */}
+                  <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
+                    {users.find((user) => user.name === message.name) !==
+                    undefined ? (
+                      <Svg
+                        src={
+                          users.find((user) => user.name === message.name).svg
+                        }
+                        alt="avatar"
+                        className="inline"
+                      />
+                    ) : null}
                   </div>
-                ))
-              : null}
-            <div ref={messageEndRef} />
-          </div>
+                  <div>
+                    <div className="capitalize font-sans text-lg">
+                      {message.name}
+                    </div>
+                    <div>{message.body}</div>
+                  </div>
+                </div>
+              ))
+            : null}
+          <div ref={messageEndRef} />
         </div>
-        <form className="flex" onSubmit={submitHandler}>
+        <form className="flex w-full h-10 items-center my-auto" onSubmit={submitHandler}>
           <input
             id="message"
             type="text"
             ref={message}
             placeholder="Enter your message"
             required
-            className="bg-gray-600 focus:outline-none border-none w-11/12 focus:border-solid border-2 h-8 rounded-lg px-3 py-4 focus:border-green-500 mr-2"
+            className="bg-gray-600 focus:outline-none border-none w-11/12 focus:border-solid border-2 h-full rounded-lg px-3 py-4 focus:border-green-500 mr-2"
           ></input>
-          <button
-            className="bg-green-700 h-8 w-20 rounded-lg px-8"
-            type="submit"
-          >
+          <button className="bg-green-700 w-20 h-full rounded-lg px-8" type="submit">
             <RiSendPlane2Fill />
           </button>
         </form>
