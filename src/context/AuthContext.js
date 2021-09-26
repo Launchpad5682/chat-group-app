@@ -16,6 +16,7 @@ export const AuthProvider = (props) => {
   const [groups, setGroups] = useState([]);
   const [group, setGroup] = useState(null);
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState();
 
   //signup function
   function signup(email, password) {
@@ -184,6 +185,8 @@ export const AuthProvider = (props) => {
     group,
     groups,
     sendMessage,
+    user,
+    setUser,
   };
 
   return (
