@@ -7,7 +7,7 @@ function SignUp() {
   const email = useRef(null);
   const password = useRef(null);
   const passwordConfirm = useRef(null);
-  const { signup } = useAuth();
+  const { signup, setUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +21,7 @@ function SignUp() {
       setError("");
       setLoading(true);
       await signup(email.current.value, password.current.value);
+      setUser(email.current.value.split("@")[0]);
       history.push("/groups");
     } catch {
       setError("Failed to create an account");
