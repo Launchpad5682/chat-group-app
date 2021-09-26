@@ -86,6 +86,9 @@ function Messages() {
                     <div className="capitalize font-sans text-lg">
                       {message.name}
                     </div>
+                    <div>
+                      {message.createdAt.toDate().toDateString("en-US")}
+                    </div>
                     <div>{message.body}</div>
                   </div>
                 </div>
@@ -93,7 +96,10 @@ function Messages() {
             : null}
           <div ref={messageEndRef} />
         </div>
-        <form className="flex w-full h-10 items-center my-auto" onSubmit={submitHandler}>
+        <form
+          className="flex w-full h-10 items-center my-auto"
+          onSubmit={submitHandler}
+        >
           <input
             id="message"
             type="text"
@@ -102,7 +108,10 @@ function Messages() {
             required
             className="bg-gray-600 focus:outline-none border-none w-11/12 focus:border-solid border-2 h-full rounded-lg px-3 py-4 focus:border-green-500 mr-2"
           ></input>
-          <button className="bg-green-700 w-20 h-full rounded-lg px-8" type="submit">
+          <button
+            className="bg-green-700 w-20 h-full rounded-lg px-8"
+            type="submit"
+          >
             <RiSendPlane2Fill />
           </button>
         </form>
