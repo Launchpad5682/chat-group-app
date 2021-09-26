@@ -9,7 +9,7 @@ function SignIn() {
   const password = useRef(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, setUser } = useAuth();
 
   async function submitHandler(e) {
     e.preventDefault();
@@ -18,6 +18,7 @@ function SignIn() {
       setLoading(true);
       // waits until the login credentials are updated
       await login(email.current.value, password.current.value);
+      setUser(email.current.value.split("@")[0]);
       history.push("/groups");
     } catch {}
   }
