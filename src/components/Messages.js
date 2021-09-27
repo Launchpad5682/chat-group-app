@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useFireStore } from "../hooks/useFirestore";
 import Svg from "react-inlinesvg";
-import { HiArrowLeft } from "react-icons/hi";
+import { HiArrowLeft, HiMenu } from "react-icons/hi";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 
 function Messages() {
-  const { getUsers, users, sendMessage, group } = useAuth();
+  const { getUsers, users, sendMessage, group, width } = useAuth();
 
   const { messages } = useFireStore(group);
   const message = useRef(null);
@@ -43,28 +43,35 @@ function Messages() {
 
   return (
     <div className="flex text-white bg-black h-screen">
-      <div className="w-80 p-3">
-        <h2 className="">
-          <HiArrowLeft className="inline mr-4" onClick={goBack} />
-          {group.toUpperCase()}
-        </h2>
-        <div>Group description help desk fall apart to the end</div>
-        <h2>MEMEBERS</h2>
-        <div>
-          {users
-            ? users.map((user) => (
-                <div className="flex">
-                  <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
-                    <Svg src={user.svg} alt="avatar" className="inline" />
+      {width < 500 ? (
+        <div></div>
+      ) : (
+        <div className="w-80 p-3">
+          <h2 className="">
+            <HiArrowLeft className="inline mr-4" onClick={goBack} />
+            {group.toUpperCase()}
+          </h2>
+          <div>Group description help desk fall apart to the end</div>
+          <h2>MEMEBERS</h2>
+          <div>
+            {users
+              ? users.map((user) => (
+                  <div className="flex">
+                    <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
+                      <Svg src={user.svg} alt="avatar" className="inline" />
+                    </div>
+                    {user.name}
                   </div>
-                  {user.name}
-                </div>
-              ))
-            : null}
+                ))
+              : null}
+          </div>
         </div>
-      </div>
+      )}
       <div className="bg-gray-900 w-full p-3 flex-col h-screen">
-        <h1 className="text-xl mb-4">{group.toUpperCase()}</h1>
+        <h1 className="text-xl mb-4">
+          {width > 500 ? null : <HiMenu className="inline mr-4" />}
+          {group.toUpperCase()}
+        </h1>
         <div className="scroll-div flex-col-reverse h-5/6 mb-6">
           {messages
             ? messages.map((message) => (
