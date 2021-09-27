@@ -174,7 +174,7 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     setCurrentUser(JSON.parse(window.sessionStorage.getItem("currentUser")));
-  }, []);
+  }, [currentUser]);
 
   const value = {
     currentUser,
