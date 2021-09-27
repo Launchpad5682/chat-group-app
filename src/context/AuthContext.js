@@ -126,7 +126,7 @@ export const AuthProvider = (props) => {
   }
 
   async function addUser2Group(group) {
-    const { uid, photoURL } = currentUser;
+    //const { uid, photoURL } = currentUser;
 
     let groupUsersRef = await fireDB
       .collection("groups")
