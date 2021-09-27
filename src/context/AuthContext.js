@@ -163,7 +163,7 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
-      window.sessionStorage.setItem("currentUser", currentUser);
+      window.sessionStorage.setItem("currentUser", user);
       setLoading(false);
       // temporary
       // if (currentUser) addUser2Group(group);
@@ -173,8 +173,9 @@ export const AuthProvider = (props) => {
   });
 
   useEffect(() => {
+    console.log(JSON.parse(window.sessionStorage.getItem("currentUser")));
     setCurrentUser(JSON.parse(window.sessionStorage.getItem("currentUser")));
-  }, [currentUser]);
+  }, []);
 
   const value = {
     currentUser,
