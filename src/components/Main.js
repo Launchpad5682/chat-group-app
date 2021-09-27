@@ -7,7 +7,7 @@ import { useState } from "react";
 import GroupSideBar from "./Groups/GroupSideBar";
 
 function Main() {
-  const { getGroups, width } = useAuth();
+  const { getGroups, currentUser, width } = useAuth();
   const { modalOverlay } = useModalOverlayContext();
   const [drawer, setDrawer] = useState(false);
 
@@ -36,7 +36,7 @@ function Main() {
         )}
         <div className="bg-gray-900 w-full p-3">
           {width < 500 ? <HiMenu onClick={() => setDrawer(true)} /> : null}
-          <div></div>
+          <div>{currentUser ? currentUser.email : null}</div>
         </div>
       </div>
       {modalOverlay && <AddGroupDialog />}
