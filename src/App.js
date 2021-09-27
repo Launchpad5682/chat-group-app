@@ -21,6 +21,7 @@ function App() {
 
   useEffect(() => {
     getGroups();
+    // eslint-disable-next-line
   }, []);
 
   return (

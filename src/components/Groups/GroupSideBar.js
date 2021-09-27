@@ -7,7 +7,7 @@ import { useModalOverlayContext } from "../../context/ModalOverlayContext";
 
 function GroupSideBar() {
   const { groups, getUsers, users, user, addUser2Group, setGroup } = useAuth();
-  const { modalOverlay, setModalOverlay } = useModalOverlayContext();
+  const { setModalOverlay } = useModalOverlayContext();
   const history = useHistory();
 
   const selectGroup = (event, group) => {

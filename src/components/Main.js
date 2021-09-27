@@ -13,6 +13,8 @@ function Main() {
 
   useEffect(() => {
     getGroups();
+
+    //eslint-disable-next-line
   }, []);
 
   return (
