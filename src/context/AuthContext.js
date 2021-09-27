@@ -17,6 +17,7 @@ export const AuthProvider = (props) => {
   const [group, setGroup] = useState(null);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState();
+  const width = window.innerWidth;
 
   //signup function
   function signup(email, password) {
@@ -187,6 +188,7 @@ export const AuthProvider = (props) => {
     sendMessage,
     user,
     setUser,
+    width,
   };
 
   return (

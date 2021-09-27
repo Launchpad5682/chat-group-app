@@ -1,31 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { useFireStore } from "../hooks/useFirestore";
-import Svg from "react-inlinesvg";
-import { HiArrowLeft } from "react-icons/hi";
+import { HiMenu } from "react-icons/hi";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
+import GroupInfo from "./Messages/GroupInfo";
+import ChatSection from "./Messages/ChatSection";
 
 function Messages() {
-  const { getUsers, users, sendMessage, group } = useAuth();
-
-  const { messages } = useFireStore(group);
+  const { getUsers, sendMessage, group, width } = useAuth();
   const message = useRef(null);
-  const messageEndRef = useRef(null);
   const history = useHistory();
+
+  // local state for side drawer
+  const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
     getUsers(group);
   });
-
-  // scroll to bottom https://stackoverflow.com/questions/37620694/how-to-scroll-to-bottom-in-react
-  const scrollToBottom = () => {
-    messageEndRef.current.scrollIntoView({ behaviour: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   function submitHandler(e) {
     e.preventDefault();
@@ -43,58 +34,29 @@ function Messages() {
 
   return (
     <div className="flex text-white bg-black h-screen">
-      <div className="w-80 p-3">
-        <h2 className="">
-          <HiArrowLeft className="inline mr-4" onClick={goBack} />
-          {group.toUpperCase()}
-        </h2>
-        <div>Group description help desk fall apart to the end</div>
-        <h2>MEMEBERS</h2>
-        <div>
-          {users
-            ? users.map((user) => (
-                <div className="flex">
-                  <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
-                    <Svg src={user.svg} alt="avatar" className="inline" />
-                  </div>
-                  {user.name}
-                </div>
-              ))
-            : null}
+      {width < 500 ? (
+        drawer === true ? (
+          <div className="fixed inset-0 bg-transparent flex">
+            <div className="w-11/12 bg-black h-full">
+              <GroupInfo goBack={goBack} />
+            </div>
+            <div className="w-full" onClick={() => setDrawer(false)}></div>
+          </div>
+        ) : null
+      ) : (
+        <div className="w-80 p-3">
+          <GroupInfo goBack={goBack} />
         </div>
-      </div>
+      )}
       <div className="bg-gray-900 w-full p-3 flex-col h-screen">
-        <h1 className="text-xl mb-4">{group.toUpperCase()}</h1>
+        <h1 className="text-xl mb-4">
+          {width > 500 ? null : (
+            <HiMenu className="inline mr-4" onClick={() => setDrawer(true)} />
+          )}
+          {group.toUpperCase()}
+        </h1>
         <div className="scroll-div flex-col-reverse h-5/6 mb-6">
-          {messages
-            ? messages.map((message) => (
-                <div className="my-2 border-2 border-gray-600 bg-gray-800 flex rounded-lg py-1">
-                  {/* {avatar ? <div>avatar</div> : null} */}
-                  <div className="w-12 pr-12 h-12 m-1 bg-gray-600 rounded-lg">
-                    {users.find((user) => user.name === message.name) !==
-                    undefined ? (
-                      <Svg
-                        src={
-                          users.find((user) => user.name === message.name).svg
-                        }
-                        alt="avatar"
-                        className="inline"
-                      />
-                    ) : null}
-                  </div>
-                  <div>
-                    <div className="capitalize font-sans text-lg">
-                      {message.name}
-                    </div>
-                    <div>
-                      {message.createdAt.toDate().toDateString("en-US")}
-                    </div>
-                    <div>{message.body}</div>
-                  </div>
-                </div>
-              ))
-            : null}
-          <div ref={messageEndRef} />
+          <ChatSection />
         </div>
         <form
           className="flex w-full h-10 items-center my-auto"
@@ -121,4 +83,3 @@ function Messages() {
 }
 
 export default Messages;
-/* RiSendPlane2Fill */
