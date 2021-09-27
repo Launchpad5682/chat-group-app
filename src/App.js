@@ -17,7 +17,7 @@ import { ModalOverlayProvider } from "./context/ModalOverlayContext";
 import Messages from "./components/Messages";
 
 function App() {
-  const { groups, getGroups } = useAuth();
+  const { groups, getGroups, currentUser } = useAuth();
 
   useEffect(() => {
     getGroups();
@@ -30,19 +30,24 @@ function App() {
         <Switch>
           {groups
             ? groups.map((group) => (
-                <PrivateRoute path={"/" + group}>
-                  <Messages />
-                </PrivateRoute>
+                <PrivateRoute exact path={"/" + group} component={Messages} />
               ))
             : null}
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={SignIn} />
-          <Route path="/signout" component={SignOut} />
-          <PrivateRoute path="/groups" component={Main} />
-          <PrivateRoute path="/:id" component={Messages} />
-          <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/login" component={SignIn} />
+          <Route exact path="/signout" component={SignOut} />
+          <PrivateRoute exact path="/groups" component={Main} />
+          {/* <PrivateRoute exact path="/:id" component={Messages} /> */}
+          <Route
+            path="/"
+            render={() =>
+              currentUser === null ? (
+                <Redirect to="/login" />
+              ) : (
+                <Redirect to="/groups" />
+              )
+            }
+          />
         </Switch>
       </Router>
     </ModalOverlayProvider>
