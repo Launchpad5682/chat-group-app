@@ -38,12 +38,8 @@ function App() {
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={SignIn} />
           <Route path="/signout" component={SignOut} />
-          <PrivateRoute path="/groups">
-            <Main />
-          </PrivateRoute>
-          <PrivateRoute path="/:id">
-            <Messages />
-          </PrivateRoute>
+          <PrivateRoute path="/groups" component={Main} />
+          <PrivateRoute path="/:id" component={Messages} />
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
