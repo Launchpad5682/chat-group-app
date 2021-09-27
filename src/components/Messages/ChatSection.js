@@ -37,7 +37,11 @@ function ChatSection() {
                 <div className="capitalize font-sans text-lg">
                   {message.name}
                 </div>
-                <div>{message.createdAt.toDate().toDateString("en-US")}</div>
+                <div>
+                  {message.createdAt
+                    ? message.createdAt.toDate().toDateString("en-US")
+                    : null}
+                </div>
                 <div>{message.body}</div>
               </div>
             </div>
