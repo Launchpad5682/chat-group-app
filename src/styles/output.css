@@ -29840,7 +29840,12 @@ video {
 
 .scroll-div {
   overflow-y: auto;
-  height: 900px;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scroll-div::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 @media (min-width: 640px) {
@@ -59078,7 +59083,12 @@ video {
 
   .sm\:scroll-div {
     overflow-y: auto;
-    height: 900px;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .sm\:scroll-div::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }
 
@@ -88317,7 +88327,12 @@ video {
 
   .md\:scroll-div {
     overflow-y: auto;
-    height: 900px;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .md\:scroll-div::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }
 
@@ -117556,7 +117571,12 @@ video {
 
   .lg\:scroll-div {
     overflow-y: auto;
-    height: 900px;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .lg\:scroll-div::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }
 
@@ -146795,7 +146815,12 @@ video {
 
   .xl\:scroll-div {
     overflow-y: auto;
-    height: 900px;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .xl\:scroll-div::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }
 
@@ -176034,6 +176059,11 @@ video {
 
   .\32xl\:scroll-div {
     overflow-y: auto;
-    height: 900px;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .\32xl\:scroll-div::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 }
