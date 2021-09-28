@@ -3,6 +3,7 @@ import Svg from "react-inlinesvg";
 import { useAuth } from "../context/AuthContext";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineLogout } from "react-icons/ai";
+import { NavLink } from "react-router-dom";
 
 function Profile() {
   const { user, getAvatar } = useAuth();
@@ -15,9 +16,13 @@ function Profile() {
 
   const DropDown = () => {
     return (
-      <div className="h-10 w-28 relative bg-gray-800 bottom-20 right-2 float-right rounded-lg flex justify-center items-center cursor-pointer hover:bg-gray-600">
-        <AiOutlineLogout className="text-red-500 text-lg" />
-        <span className="pl-2">Sign Out</span>
+      <div className="h-10 w-28 relative bg-gray-800 bottom-20 right-2 float-right rounded-lg flex justify-center items-center">
+        <NavLink to="/signout">
+          <div className="hover:bg-gray-600 flex justify-center items-center p-1 rounded-lg">
+            <AiOutlineLogout className="text-red-500 text-lg" />
+            <span className="pl-2">Sign Out</span>
+          </div>
+        </NavLink>
       </div>
     );
   };
