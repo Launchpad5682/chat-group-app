@@ -41,7 +41,7 @@ function GroupSideBar() {
           ? groups.map((group) => (
               <div
                 key={group}
-                className="flex rounded-md mt-3 h-11 hover:bg-green-600"
+                className="flex rounded-md mt-3 h-11 hover:bg-green-600 cursor-pointer"
                 onClick={(event) => selectGroup(event, group)}
               >
                 <div className="text-lg bg-gray-600 mr-2 rounded-md w-11 h-max flex items-center justify-center">
