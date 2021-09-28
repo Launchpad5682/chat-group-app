@@ -163,7 +163,7 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
-      setUser(currentUser.email.split("@")[0]);
+      if (user !== null) setUser(currentUser.email.split("@")[0]);
       // window.sessionStorage.setItem("currentUser", user);
       setLoading(false);
       // temporary
