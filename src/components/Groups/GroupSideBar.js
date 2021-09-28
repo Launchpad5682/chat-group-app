@@ -36,12 +36,12 @@ function GroupSideBar() {
           className="w-full bg-gray-800 h-10 outline-none px-3 rounded-md mt-2"
         ></input>
       </form>
-      <div className="mt-5">
+      <div className="mt-5 h-5/6 scroll-div">
         {groups
           ? groups.map((group) => (
               <div
                 key={group}
-                className="flex rounded-md mt-3 h-11 hover:bg-green-600"
+                className="flex rounded-md mt-3 h-11 hover:bg-green-600 cursor-pointer"
                 onClick={(event) => selectGroup(event, group)}
               >
                 <div className="text-lg bg-gray-600 mr-2 rounded-md w-11 h-max flex items-center justify-center">
