@@ -15,9 +15,9 @@ function Profile() {
 
   const DropDown = () => {
     return (
-      <div className="h-10 w-28 relative bg-gray-800 bottom-20 right-2 float-right">
-        Hello
-        <AiOutlineLogout />
+      <div className="h-10 w-28 relative bg-gray-800 bottom-20 right-2 float-right rounded-lg flex justify-center items-center cursor-pointer hover:bg-gray-600">
+        <AiOutlineLogout className="text-red-500 text-lg" />
+        <span className="pl-2">Sign Out</span>
       </div>
     );
   };
