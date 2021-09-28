@@ -36,7 +36,7 @@ function GroupSideBar() {
           className="w-full bg-gray-800 h-10 outline-none px-3 rounded-md mt-2"
         ></input>
       </form>
-      <div className="mt-5">
+      <div className="mt-5 h-5/6 scroll-div">
         {groups
           ? groups.map((group) => (
               <div

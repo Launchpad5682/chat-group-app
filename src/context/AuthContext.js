@@ -163,6 +163,7 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      if (user !== null) setUser(currentUser.email.split("@")[0]);
       // window.sessionStorage.setItem("currentUser", user);
       setLoading(false);
       // temporary
@@ -192,6 +193,7 @@ export const AuthProvider = (props) => {
     group,
     groups,
     sendMessage,
+    getAvatar,
     user,
     setUser,
     width,
