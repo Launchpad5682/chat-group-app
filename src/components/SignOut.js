@@ -13,7 +13,9 @@ function SignOut() {
   return (
     <div className="pt-10">
       Sign Out Successful
-      <NavLink to="/login" className="p-4 rounded-lg bg-red-700 text-white">Login</NavLink>
+      <NavLink to="/login" className="p-4 rounded-lg bg-red-700 text-white">
+        Login
+      </NavLink>
     </div>
   );
 }
